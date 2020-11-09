@@ -10,6 +10,7 @@ import JellyKit
 import Security
 
 public class SessionStore: ObservableObject {
+    @Published public var preferences: PreferenceStore = PreferenceStore()
     @Published public var items: [API.Models.Item] = []
     @Published public var user: API.AuthUser? = nil
     @Published public var alert: AlertError? = nil
