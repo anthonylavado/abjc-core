@@ -84,9 +84,19 @@ public class PreferenceStore: ObservableObject {
             betaflags.set(.playbackReporting, to: newValue)
         }
     }
+    
+    public var beta_playbackContinuation: Bool {
+        get {
+            betaflags.isEnabled(.playbackContinuation)
+        }
+        set {
+            betaflags.set(.playbackContinuation, to: newValue)
+        }
+    }
         
     public enum BetaFlag: String, CaseIterable {
         case playbackReporting = "playbackreporting"
+        case playbackContinuation = "playbackcontinuation"
         
         public func availableFlags() -> [BetaFlag] {
             let config = Self.configuration()
@@ -95,7 +105,8 @@ public class PreferenceStore: ObservableObject {
         
         static func configuration() -> [BetaFlag: Bool]{
             return [
-                Self.playbackReporting: false
+                Self.playbackReporting: false,
+                Self.playbackContinuation: false
             ]
         }
     }
