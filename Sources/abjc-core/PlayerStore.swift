@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 import AVKit
-import JellyKit
+import abjc_api
 
 public class PlayerStore: ObservableObject {
     @Published public var playItem: PlayItem? = nil

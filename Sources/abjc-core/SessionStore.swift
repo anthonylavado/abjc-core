@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import JellyKit
+import abjc_api
 import Security
 
 public class SessionStore: ObservableObject {
@@ -14,7 +14,6 @@ public class SessionStore: ObservableObject {
     @Published public var items: [API.Models.Item] = []
     @Published public var user: API.AuthUser? = nil
     @Published public var alert: AlertError? = nil
-    
     
     @Published private(set) public var host: String = ""
     @Published private(set) public var port: Int = 8096

@@ -17,14 +17,12 @@ let package = Package(
             targets: ["abjc-core"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/ABJC/JellyKit", from: "1.0.0-build.7")
+        .package(url: "https://github.com/ABJC/abjc-api", .upToNextMajor(from: "1.0.0")),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "abjc-core",
-            dependencies: ["JellyKit"]),
+            dependencies: ["abjc-api"]),
         .testTarget(
             name: "abjc-coreTests",
             dependencies: ["abjc-core"]),
