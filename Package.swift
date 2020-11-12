@@ -7,7 +7,7 @@ let package = Package(
     name: "abjc-core",
     platforms: [
         .macOS(.v10_15),
-        .iOS(.v13),
+        .iOS(.v14),
         .tvOS(.v13)
     ],
     products: [
@@ -17,7 +17,7 @@ let package = Package(
             targets: ["abjc-core"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/ABJC/abjc-api", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/ABJC/abjc-api", .upToNextMajor(from: "1.0.0-build.8")),
     ],
     targets: [
         .target(

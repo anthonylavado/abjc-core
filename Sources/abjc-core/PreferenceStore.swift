@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 public class PreferenceStore: ObservableObject {
     private enum Keys {
@@ -73,6 +74,7 @@ public class PreferenceStore: ObservableObject {
         }
         set {
             defaults.set(newValue.map({ $0.rawValue }), forKey: Keys.betaflags)
+            objectWillChange.send()
         }
     }
     
@@ -93,46 +95,65 @@ public class PreferenceStore: ObservableObject {
             betaflags.set(.playbackContinuation, to: newValue)
         }
     }
+    
+    public var beta_uglymode: Bool {
+        get {
+            betaflags.isEnabled(.uglymode)
+        }
+        set {
+            betaflags.set(.uglymode, to: newValue)
+        }
+    }
         
     public enum BetaFlag: String, CaseIterable {
         case playbackReporting = "playbackreporting"
         case playbackContinuation = "playbackcontinuation"
+        case uglymode = "uglymode"
         
-        public func availableFlags() -> [BetaFlag] {
+        public var label: LocalizedStringKey {
+            return LocalizedStringKey("betaflags."+self.rawValue+".label")
+        }
+        
+        public var description: LocalizedStringKey {
+            return LocalizedStringKey("betaflags."+self.rawValue+".descr")
+        }
+        
+        public static func availableFlags() -> [BetaFlag] {
             let config = Self.configuration()
             return Self.allCases.filter({ (config[$0] ?? false) })
         }
         
-        static func configuration() -> [BetaFlag: Bool]{
+        public static func configuration() -> [BetaFlag: Bool] {
             return [
-                Self.playbackReporting: false,
-                Self.playbackContinuation: false
+                .playbackReporting: false,
+                .playbackContinuation: false,
+                .uglymode: true
             ]
         }
     }
 }
 
 
-extension Set where Element == PreferenceStore.BetaFlag {
+public extension Set where Element == PreferenceStore.BetaFlag {
     mutating func enable(_ flag: Element) {
-        if !self.contains(flag) {
-            self.insert(flag)
-        }
+        self.insert(flag)
     }
     
     mutating func disable(_ flag: Element) {
-        if self.contains(flag) {
-            self.remove(flag)
+        self.remove(flag)
+    }
+    
+    mutating func toggle(_ flag: Element) {
+        if isEnabled(flag) {
+            disable(flag)
+        } else {
+            enable(flag)
         }
     }
     
     mutating func set(_ flag: Element, to state: Bool) {
         if state != isEnabled(flag) {
-            if state {
-                enable(flag)
-            } else {
-               disable(flag)
-            }
+            toggle(flag)
         }
     }
     
