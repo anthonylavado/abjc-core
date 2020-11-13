@@ -14,6 +14,7 @@ extension Image {
     }
 }
 
+
 extension UIImage {
     public convenience init?(blurHash: String, size: CGSize, punch: Float = 1) {
         guard blurHash.count >= 6 else { return nil }

@@ -8,10 +8,9 @@ let package = Package(
     platforms: [
         .macOS(.v10_15),
         .iOS(.v14),
-        .tvOS(.v13)
+        .tvOS(.v14)
     ],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "abjc-core",
             targets: ["abjc-core"]),
