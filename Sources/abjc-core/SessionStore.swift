@@ -55,15 +55,16 @@ public class SessionStore: ObservableObject {
         } else {
             self.api = API(host, port, nil, deviceId)
         }
-        print(self.api.host, self.api.port)
         return self.api
     }
     
     
     /// Clears the SessionScore
     public func clear() {
-//        KeyChain.clear(key: "credentials")
-        self.api = API("localhost", 8096)
-        self.user = nil
+        DispatchQueue.main.async {
+            KeyChain.clear(key: "credentials")
+            self.api = API("localhost", 8096)
+            self.user = nil
+        }
     }
 }
