@@ -16,8 +16,7 @@ public class PreferenceStore: ObservableObject {
         static let moviestab = "tabviewconfiguration.moviestab"
         static let searchtab = "tabviewconfiguration.searchtab"
         
-        static let debugOptions = "debugoptions"
-        
+        static let debugMode = "debugmode"
         static let betaflags = "betaflags"
     }
 
@@ -30,11 +29,11 @@ public class PreferenceStore: ObservableObject {
         self.defaults = defaults
 
         defaults.register(defaults: [
-            Keys.watchnowtab: true,
+            Keys.watchnowtab: false,
             Keys.moviestab: true,
             Keys.seriestab: true,
             Keys.searchtab: true,
-            Keys.debugOptions: true,
+            Keys.debugMode: false,
             Keys.betaflags: []
         ])
 
@@ -64,7 +63,13 @@ public class PreferenceStore: ObservableObject {
         set { defaults.setValue(newValue, forKey: Keys.searchtab) }
     }
     
-    
+    public var isDebugEnabled: Bool {
+        get { defaults.bool(forKey: Keys.debugMode) }
+        set {
+            defaults.setValue(newValue, forKey: Keys.debugMode)
+            self.objectWillChange.send()
+        }
+    }
     
     public var betaflags: Set<BetaFlag> {
         get {
