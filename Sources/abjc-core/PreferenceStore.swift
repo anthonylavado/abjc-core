@@ -27,7 +27,8 @@ public class PreferenceStore: ObservableObject {
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
-
+        
+        print("HELLO WORLD")
         defaults.register(defaults: [
             Keys.watchnowtab: false,
             Keys.moviestab: true,

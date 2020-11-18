@@ -25,4 +25,25 @@ public class AlertError: Identifiable, ObservableObject {
         self.title = LocalizedStringKey(title)
         self.description = LocalizedStringKey(descr)
     }
+    
+    public init(_ title: String, _ error: Error) {
+        self.id = Date()
+        self.title = LocalizedStringKey(title)
+        self.description = LocalizedStringKey(error.string)
+    }
+    
+    public init(_ title: LocalizedStringKey, _ error: Error) {
+        self.id = Date()
+        self.title = title
+        self.description = LocalizedStringKey(error.string)
+        
+    }
+}
+
+
+extension Error {
+    public var string: String {
+        print(self)
+        return self.localizedDescription
+    }
 }
