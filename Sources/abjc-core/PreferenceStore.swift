@@ -28,7 +28,6 @@ public class PreferenceStore: ObservableObject {
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         
-        print("HELLO WORLD")
         defaults.register(defaults: [
             Keys.watchnowtab: false,
             Keys.moviestab: true,
@@ -43,6 +42,8 @@ public class PreferenceStore: ObservableObject {
             .map { _ in () }
             .subscribe(objectWillChange)
     }
+    
+    public let version: Version = Version(1,0,0, 13)
     
     public var showingWatchNowTab: Bool {
         get { defaults.bool(forKey: Keys.watchnowtab) }
