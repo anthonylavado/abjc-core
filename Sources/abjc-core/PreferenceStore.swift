@@ -85,6 +85,15 @@ public class PreferenceStore: ObservableObject {
         }
     }
     
+    public var beta_singlePagemode: Bool {
+        get {
+            betaflags.isEnabled(.singlePageMode)
+        }
+        set {
+            betaflags.set(.singlePageMode, to: newValue)
+        }
+    }
+    
     public var beta_playbackReporting: Bool {
         get {
             betaflags.isEnabled(.playbackReporting)
@@ -116,6 +125,7 @@ public class PreferenceStore: ObservableObject {
         case playbackReporting = "playbackreporting"
         case playbackContinuation = "playbackcontinuation"
         case uglymode = "uglymode"
+        case singlePageMode = "singlepagemode"
         
         public var label: LocalizedStringKey {
             return LocalizedStringKey("betaflags."+self.rawValue+".label")
@@ -134,7 +144,8 @@ public class PreferenceStore: ObservableObject {
             return [
                 .playbackReporting: false,
                 .playbackContinuation: false,
-                .uglymode: true
+                .uglymode: true,
+                .singlePageMode: true
             ]
         }
     }

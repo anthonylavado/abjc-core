@@ -38,7 +38,7 @@ public class PlayerStore: ObservableObject {
     /// Reports Playback started to Jellyfin server
     /// - Parameter player: AVPlayer
     public func startedPlayback(_ player: AVPlayer?) {
-        self.api?.startPlayback(for: self.playItem!.id, at: 0)
+        self.api?.startPlayback(for: self.playItem!.id, at: Int(player?.currentTime().seconds ?? 0*10000000))
     }
     
     
@@ -47,8 +47,9 @@ public class PlayerStore: ObservableObject {
     ///   - player: AVPlayer
     ///   - pos: Playback position in seconds
     public func reportPlayback(_ player: AVPlayer?, _ pos: Double) {
+        print("REPORTING")
         if let item = playItem {
-            self.api?.reportPlayback(for: item.id, positionTicks: Int(pos*1000000))
+            self.api?.reportPlayback(for: item.id, positionTicks: 37623016000)
         }
     }
     
@@ -72,7 +73,7 @@ public extension PlayerStore {
     class PlayItem: Identifiable {
         public let id: String
         public let sourceId: String
-        private let userData: API.Models.UserData
+        public let userData: API.Models.UserData
         
         public init(_ item: Playable) {
             self.id = item.id
