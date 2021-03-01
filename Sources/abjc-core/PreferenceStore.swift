@@ -120,12 +120,22 @@ public class PreferenceStore: ObservableObject {
             betaflags.set(.uglymode, to: newValue)
         }
     }
+    
+    public var beta_showsTitles: Bool {
+        get {
+            betaflags.isEnabled(.showsTitles)
+        }
+        set {
+            betaflags.set(.showsTitles, to: newValue)
+        }
+    }
         
     public enum BetaFlag: String, CaseIterable {
         case playbackReporting = "playbackreporting"
         case playbackContinuation = "playbackcontinuation"
         case uglymode = "uglymode"
         case singlePageMode = "singlepagemode"
+        case showsTitles = "showstitles"
         
         public var label: LocalizedStringKey {
             return LocalizedStringKey("betaflags."+self.rawValue+".label")
@@ -145,7 +155,8 @@ public class PreferenceStore: ObservableObject {
                 .playbackReporting: false,
                 .playbackContinuation: false,
                 .uglymode: true,
-                .singlePageMode: true
+                .singlePageMode: true,
+                .showsTitles: true
             ]
         }
     }
