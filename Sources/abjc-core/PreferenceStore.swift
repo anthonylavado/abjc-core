@@ -152,8 +152,8 @@ public class PreferenceStore: ObservableObject {
         
         public static func configuration() -> [BetaFlag: Bool] {
             return [
-                .playbackReporting: false,
-                .playbackContinuation: false,
+                .playbackReporting: true,
+                .playbackContinuation: true,
                 .uglymode: true,
                 .singlePageMode: true,
                 .showsTitles: true

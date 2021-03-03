@@ -18,6 +18,8 @@ public class PlayerStore: ObservableObject {
     
     private var timer: Timer? = nil
     
+    private let ticksPerSeconds = 10000000
+    
     public init() {}
     
     /// Prepares Playback for Item
@@ -32,13 +34,15 @@ public class PlayerStore: ObservableObject {
     /// - Parameter movie: Movie Item
     public func play(_ movie: API.Models.Movie) {
         self.playItem = PlayItem(movie)
+        print("POSITION", movie.userData.playbackPosition)
+        print("POSITION TICKS", movie.userData.playbackPositionTicks)
     }
     
     
     /// Reports Playback started to Jellyfin server
     /// - Parameter player: AVPlayer
     public func startedPlayback(_ player: AVPlayer?) {
-        self.api?.startPlayback(for: self.playItem!.id, at: Int(player?.currentTime().seconds ?? 0*10000000))
+        self.api?.startPlayback(for: self.playItem!.id, at: Int(player?.currentTime().seconds ?? 0) * ticksPerSeconds)
     }
     
     
@@ -46,10 +50,10 @@ public class PlayerStore: ObservableObject {
     /// - Parameters:
     ///   - player: AVPlayer
     ///   - pos: Playback position in seconds
-    public func reportPlayback(_ player: AVPlayer?, _ pos: Double) {
+    public func reportPlayback(_ player: AVPlayer?, _ posTicks: Int) {
         print("REPORTING")
         if let item = playItem {
-            self.api?.reportPlayback(for: item.id, positionTicks: 37623016000)
+            self.api?.reportPlayback(for: item.id, positionTicks: posTicks)
         }
     }
     
@@ -60,7 +64,7 @@ public class PlayerStore: ObservableObject {
     ///   - player: AVPlayer
     public func stoppedPlayback(_ item: PlayItem, _ player: AVPlayer?) {
         if let playbackPosition = player?.currentTime().seconds {
-            let posTicks = Int(playbackPosition * 1000000)
+            let posTicks = Int(playbackPosition * Double(ticksPerSeconds))
             self.api?.stopPlayback(for: item.id, positionTicks: posTicks)
         } else {
             print("ERROR")
