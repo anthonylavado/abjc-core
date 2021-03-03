@@ -94,24 +94,6 @@ public class PreferenceStore: ObservableObject {
         }
     }
     
-    public var beta_playbackReporting: Bool {
-        get {
-            betaflags.isEnabled(.playbackReporting)
-        }
-        set {
-            betaflags.set(.playbackReporting, to: newValue)
-        }
-    }
-    
-    public var beta_playbackContinuation: Bool {
-        get {
-            betaflags.isEnabled(.playbackContinuation)
-        }
-        set {
-            betaflags.set(.playbackContinuation, to: newValue)
-        }
-    }
-    
     public var beta_uglymode: Bool {
         get {
             betaflags.isEnabled(.uglymode)
@@ -131,8 +113,6 @@ public class PreferenceStore: ObservableObject {
     }
         
     public enum BetaFlag: String, CaseIterable {
-        case playbackReporting = "playbackreporting"
-        case playbackContinuation = "playbackcontinuation"
         case uglymode = "uglymode"
         case singlePageMode = "singlepagemode"
         case showsTitles = "showstitles"
@@ -152,8 +132,6 @@ public class PreferenceStore: ObservableObject {
         
         public static func configuration() -> [BetaFlag: Bool] {
             return [
-                .playbackReporting: true,
-                .playbackContinuation: true,
                 .uglymode: true,
                 .singlePageMode: true,
                 .showsTitles: true
