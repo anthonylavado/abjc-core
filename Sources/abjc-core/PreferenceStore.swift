@@ -111,11 +111,21 @@ public class PreferenceStore: ObservableObject {
             betaflags.set(.showsTitles, to: newValue)
         }
     }
+    
+    public var beta_coverRows: Bool {
+        get {
+            betaflags.isEnabled(.coverRows)
+        }
+        set {
+            betaflags.set(.coverRows, to: newValue)
+        }
+    }
         
     public enum BetaFlag: String, CaseIterable {
         case uglymode = "uglymode"
         case singlePageMode = "singlepagemode"
         case showsTitles = "showstitles"
+        case coverRows = "coverrows"
         
         public var label: LocalizedStringKey {
             return LocalizedStringKey("betaflags."+self.rawValue+".label")
@@ -134,7 +144,8 @@ public class PreferenceStore: ObservableObject {
             return [
                 .uglymode: true,
                 .singlePageMode: true,
-                .showsTitles: true
+                .showsTitles: true,
+                .coverRows: false
             ]
         }
     }
